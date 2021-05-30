@@ -1,7 +1,5 @@
 package com.example.finalpj.entity;
 
-import java.sql.Date;
-
 import lombok.Data;
 
 @Data
@@ -9,12 +7,21 @@ public class Event {
 
     Integer id;
 
-    Date date;
+    String date;
 
     String title;
 
     String details;
 
-    String imageUrl;
+    public Event(Integer id, String date, String title, String details) {
+        this.id = id;
+        this.date = date;
+        this.title = title;
+        this.details = details;
+    }
+
+    String image;
+
+
 
 }
