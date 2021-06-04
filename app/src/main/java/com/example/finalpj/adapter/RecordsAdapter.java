@@ -13,7 +13,6 @@ import com.example.finalpj.R;
 import com.example.finalpj.entity.Event;
 import com.example.finalpj.utils.BitmapToStringUtil;
 
-import java.util.Date;
 import java.util.List;
 
 public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.ViewHolder> {
@@ -29,7 +28,7 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.ViewHold
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            date = (TextView) itemView.findViewById(R.id.item_time);
+            date = (TextView) itemView.findViewById(R.id.tv_time);
             title = (TextView) itemView.findViewById(R.id.title);
             details = (TextView) itemView.findViewById(R.id.details);
             imageView = (ImageView) itemView.findViewById(R.id.item_image);
@@ -44,7 +43,7 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.event_item, parent, false);
+                .inflate(R.layout.item_even, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -55,7 +54,7 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.ViewHold
         holder.date.setText(event.getDate());
         holder.title.setText(event.getTitle());
         holder.details.setText(event.getDetails());
-        holder.imageView.setImageBitmap(BitmapToStringUtil.convertStringToIcon(event.getImage()));
+//        holder.imageView.setImageBitmap(BitmapToStringUtil.convertStringToIcon(event.getImage()));
     }
 
 
