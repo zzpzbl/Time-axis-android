@@ -9,8 +9,11 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+
+import com.example.finalpj.activity.EditActivity;
 import com.loper7.date_time_picker.*;
 
 import android.widget.EditText;
@@ -26,16 +29,37 @@ public class FirstBloodActivity extends AppCompatActivity implements View.OnClic
     private SharedPreferences preferences;
     private Button finish;
 
-
+    /**
+     *
+     */
+    private Button jumpToEditPageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.first_blood);
+        initComponent();
+        initSharedPreferences();
+    }
+
+    private void initComponent() {
         name = findViewById(R.id.name);
         dateTimePicker = findViewById(R.id.dateTimePicker);
         finish = findViewById(R.id.finish);
         finish.setOnClickListener(this);
+
+        jumpToEditPageButton = findViewById(R.id.jump_to_edit_page_button);
+        jumpToEditPageButton.setOnClickListener((view) -> {
+            Intent intent = new Intent(FirstBloodActivity.this, EditActivity.class);
+            startActivity(intent);
+        });
+    }
+
+    private void initSharedPreferences() {
         this.preferences = PreferenceManager.getDefaultSharedPreferences(this);
     }
 

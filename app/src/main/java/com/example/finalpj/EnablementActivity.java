@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,7 +17,8 @@ public class EnablementActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.enablement);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_launch);
         SharedPreferences.Editor editor = null;
         this.preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();
@@ -33,9 +35,12 @@ public class EnablementActivity extends AppCompatActivity {
                     intent = new Intent(EnablementActivity.this, MainActivity.class);
                 }
                 startActivity(intent);
+                destroyActivity();
             }
         }, SPLASH_DISPLAY_LENGHT);
+    }
 
-
+    private void destroyActivity() {
+        finish();
     }
 }

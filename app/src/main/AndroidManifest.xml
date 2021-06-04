@@ -2,24 +2,29 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.finalpj">
+
     <uses-sdk tools:overrideLibrary="com.loper7.date_time_picker" />
+
     <application
+        android:name="org.litepal.LitePalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:windowSoftInputMode="stateHidden|adjustResize"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".FirstBloodActivity"></activity>
+        android:theme="@style/AppTheme"
+        android:windowSoftInputMode="stateHidden|adjustResize"
+        tools:ignore="MissingClass">
+        <activity android:name=".activity.EditActivity"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".FirstBloodActivity" />
         <activity android:name=".EnablementActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
-
 
 </manifest>
