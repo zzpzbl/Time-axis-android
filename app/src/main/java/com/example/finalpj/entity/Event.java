@@ -18,6 +18,7 @@ public class Event extends LitePalSupport {
     Integer id;
     String date;
     String title;
+    String intro;
     String details;
     String image;
 

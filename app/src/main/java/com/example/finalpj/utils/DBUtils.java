@@ -1,4 +1,4 @@
-package com.example.finalpj.util;
+package com.example.finalpj.utils;
 
 import android.database.sqlite.SQLiteDatabase;
 import com.example.finalpj.entity.Event;

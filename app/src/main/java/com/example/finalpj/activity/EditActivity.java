@@ -15,7 +15,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,8 +22,7 @@ import android.widget.Toast;
 
 import com.example.finalpj.R;
 import com.example.finalpj.entity.Event;
-import com.example.finalpj.util.DBUtils;
-import com.loper7.date_time_picker.StringUtils;
+import com.example.finalpj.utils.DBUtils;
 
 import static org.litepal.LitePalApplication.getContext;
 
