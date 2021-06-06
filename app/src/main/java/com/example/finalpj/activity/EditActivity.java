@@ -15,6 +15,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,16 +23,20 @@ import android.widget.Toast;
 
 import com.example.finalpj.R;
 import com.example.finalpj.entity.Event;
-import com.example.finalpj.utils.DBUtils;
+import com.example.finalpj.utils.DBUtil;
+import com.example.finalpj.utils.FileUtil;
+import com.loper7.date_time_picker.DateTimePicker;
 
 import static org.litepal.LitePalApplication.getContext;
 
 public class EditActivity extends AppCompatActivity {
 
     private Button saveEventButton;
-    private EditText eventNameEditText;
+    private EditText eventTitleEditText;
+    private EditText eventIntroEditText;
     private EditText eventDetailsEditText;
     private ImageView eventImageView;
+    private DateTimePicker eventDateTimePicker;
     private Context context;
     private String imagePath = null;
     public static final int CHOOSE_PHOTO = 1;
@@ -46,21 +51,32 @@ public class EditActivity extends AppCompatActivity {
 
     private void initComponent() {
         saveEventButton = findViewById(R.id.save_event_button);
-        eventNameEditText = findViewById(R.id.event_title_edit_text);
+        eventTitleEditText = findViewById(R.id.event_title_edit_text);
+        eventIntroEditText = findViewById(R.id.event_intro_edit_text);
         eventDetailsEditText = findViewById(R.id.event_details_edit_text);
+        eventDateTimePicker = findViewById(R.id.event_date_time_picker);
         eventImageView = findViewById(R.id.event_image_view);
         saveEventButton.setOnClickListener(view -> saveEvent());
         eventImageView.setOnClickListener(view -> openAlbum());
     }
 
     private void saveEvent() {
-        String eventTitle = eventNameEditText.getText().toString();
+        String eventTitle = eventTitleEditText.getText().toString();
+        String eventIntro = eventIntroEditText.getText().toString();
         String eventDetails = eventDetailsEditText.getText().toString();
+        Long eventDate = eventDateTimePicker.getDrawingTime();
+        String eventImage = FileUtil.imageToBase64(imagePath);
         if (eventTitle != null && !eventTitle.equals("")) {
-            Event event = new Event();
-            event.setTitle(eventTitle);
-            event.setDetails(eventDetails);
-            DBUtils.insertEventById(event);
+            Event event = Event.builder()
+                    .title(eventTitle)
+                    .intro(eventIntro)
+                    .details(eventDetails)
+                    .date(eventDate)
+                    .image(eventImage).build();
+            boolean isSuccess = DBUtil.insertEvent(event);
+            if (!isSuccess) {
+                Log.e("eventInsert", "event insertion failed");
+            }
         }
     }
 
@@ -163,11 +179,11 @@ public class EditActivity extends AppCompatActivity {
 
     private void displayImage(String imagePath)
     {
-        //LogUtil.e("album", "imagePath:" + imagePath);
+        Log.i("displayImage", "imagePath:" + imagePath);
         if (imagePath != null) {
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
             //Glide.with(this).load(imagePath).into(photo1);
-            //imageView.setImageBitmap(bitmap);
+            eventImageView.setImageBitmap(bitmap);
         } else {
             Toast.makeText(context, "打开图片失败", Toast.LENGTH_SHORT).show();
         }

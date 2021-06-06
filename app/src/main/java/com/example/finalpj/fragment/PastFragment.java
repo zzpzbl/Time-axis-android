@@ -37,7 +37,7 @@ public class PastFragment extends Fragment {
 
 
     private void initEvents() {
-        Event event = new Event(1, "2020-05-31", "来到这个世界已经", "pkmkmp");
+        Event event = new Event(1, 1622911099L, "来到这个世界已经", "pkmkmp");
         for (int i = 0; i < 10; ++i) {
             eventList.add(event);
         }

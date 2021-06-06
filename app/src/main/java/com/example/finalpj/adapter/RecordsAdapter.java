@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.finalpj.R;
 import com.example.finalpj.entity.Event;
 import com.example.finalpj.utils.BitmapToStringUtil;
+import com.example.finalpj.utils.DateUtil;
 
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Event event = events.get(position);
-        holder.date.setText(event.getDate());
+        holder.date.setText(DateUtil.timestampToDateStr(event.getDate()));
         holder.title.setText(event.getTitle());
         holder.details.setText(event.getDetails());
 //        holder.imageView.setImageBitmap(BitmapToStringUtil.convertStringToIcon(event.getImage()));

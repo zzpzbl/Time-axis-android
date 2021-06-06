@@ -1,11 +1,13 @@
 package com.example.finalpj.utils;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
 import com.example.finalpj.entity.Event;
 import org.litepal.LitePal;
 import java.util.List;
 
-public class DBUtils {
+public class DBUtil {
 
     public static SQLiteDatabase sqLiteDatabase;
 
@@ -17,7 +19,8 @@ public class DBUtils {
         return LitePal.findAll(Event.class);
     }
 
-    public static void insertEventById(Event event) {
-        event.save();
+    public static boolean insertEvent(Event event) {
+        Log.i("insertEvent", event.toString());
+        return event.save();
     }
 }

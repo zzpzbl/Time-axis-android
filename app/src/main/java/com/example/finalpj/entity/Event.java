@@ -16,13 +16,13 @@ import lombok.NoArgsConstructor;
 public class Event extends LitePalSupport {
 
     Integer id;
-    String date;
+    Long date;
     String title;
     String intro;
     String details;
     String image;
 
-    public Event(Integer id, String date, String title, String details) {
+    public Event(Integer id, Long date, String title, String details) {
         this.id = id;
         this.date = date;
         this.title = title;
