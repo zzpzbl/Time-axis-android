@@ -1,21 +1,14 @@
 package com.example.finalpj;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 
 import com.example.finalpj.adapter.FmPagerAdapter;
-import com.example.finalpj.adapter.RecordsAdapter;
-import com.example.finalpj.entity.Event;
+import com.example.finalpj.fragment.FutureFragment;
 import com.example.finalpj.fragment.PastFragment;
 import com.google.android.material.tabs.TabLayout;
 
@@ -47,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewpager);
 
         fragments.add(new PastFragment());
-        fragments.add(new PastFragment());
+        fragments.add(new FutureFragment());
 
         for (int i = 0; i < titles.length; i++) {
             tabLayout.addTab(tabLayout.newTab());

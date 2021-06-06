@@ -28,4 +28,5 @@ public class Event extends LitePalSupport {
         this.title = title;
         this.details = details;
     }
+
 }

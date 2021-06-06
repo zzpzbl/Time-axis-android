@@ -19,9 +19,11 @@ import com.example.finalpj.entity.Event;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PastFragment extends Fragment {
+public class FutureFragment extends Fragment {
+
     private List<Event> eventList = new ArrayList<>();
     private Context context;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragement_past, container, false);
@@ -35,9 +37,8 @@ public class PastFragment extends Fragment {
         return view;
     }
 
-
-    private void initEvents() {
-        Event event = new Event(1, 1622431724000L, "来到这个世界已经", "pkmkmp");
+    void initEvents() {
+        Event event = new Event(1, 1622950124L, "距离这件事情还剩", "pkmkmp");
         for (int i = 0; i < 10; ++i) {
             eventList.add(event);
         }

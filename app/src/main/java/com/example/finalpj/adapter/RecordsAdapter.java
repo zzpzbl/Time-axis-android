@@ -14,6 +14,7 @@ import com.example.finalpj.entity.Event;
 import com.example.finalpj.utils.BitmapToStringUtil;
 import com.example.finalpj.utils.DateUtil;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.ViewHolder> {
@@ -25,6 +26,7 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.ViewHold
         TextView date;
         TextView title;
         TextView details;
+        TextView countdown;
         ImageView imageView;
 
         public ViewHolder(@NonNull View itemView) {
@@ -32,6 +34,7 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.ViewHold
             date = (TextView) itemView.findViewById(R.id.tv_time);
             title = (TextView) itemView.findViewById(R.id.title);
             details = (TextView) itemView.findViewById(R.id.details);
+            countdown = itemView.findViewById(R.id.countdown);
             imageView = (ImageView) itemView.findViewById(R.id.item_image);
         }
     }
@@ -46,15 +49,18 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.ViewHold
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_even, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
+
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Event event = events.get(position);
+        Long interval = Math.abs(events.get(position).getDate() - new Timestamp(System.currentTimeMillis()).getTime()) / (1000 * 3600 * 24);
         holder.date.setText(DateUtil.timestampToDateStr(event.getDate()));
         holder.title.setText(event.getTitle());
         holder.details.setText(event.getDetails());
+        holder.countdown.setText(interval.toString());
 //        holder.imageView.setImageBitmap(BitmapToStringUtil.convertStringToIcon(event.getImage()));
     }
 

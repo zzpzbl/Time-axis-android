@@ -1,0 +1,151 @@
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"CompilerConfiguration\">\n<<<<<<< HEAD\n    <bytecodeTargetLevel target=\"11\" />\n=======\n    <bytecodeTargetLevel target=\"1.8\" />\n>>>>>>> cbd18a12dea354789f8088361376e96eb8512552\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/compiler.xml	(revision ccc1044f1d8d7932750f39bbb4554153a1c95f30)
++++ .idea/compiler.xml	(date 1622909105350)
+@@ -1,10 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="CompilerConfiguration">
+-<<<<<<< HEAD
+     <bytecodeTargetLevel target="11" />
+-=======
+-    <bytecodeTargetLevel target="1.8" />
+->>>>>>> cbd18a12dea354789f8088361376e96eb8512552
+   </component>
+ </project>
+\ No newline at end of file
+Index: app/src/main/java/com/example/finalpj/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.finalpj;\n\nimport androidx.annotation.NonNull;\nimport androidx.appcompat.app.AppCompatActivity;\nimport androidx.fragment.app.Fragment;\nimport androidx.fragment.app.FragmentManager;\nimport androidx.fragment.app.FragmentPagerAdapter;\nimport androidx.fragment.app.FragmentTransaction;\nimport androidx.recyclerview.widget.LinearLayoutManager;\nimport androidx.recyclerview.widget.RecyclerView;\nimport androidx.viewpager.widget.PagerAdapter;\nimport androidx.viewpager.widget.ViewPager;\n\nimport android.os.Bundle;\n\nimport com.example.finalpj.adapter.FmPagerAdapter;\nimport com.example.finalpj.adapter.RecordsAdapter;\nimport com.example.finalpj.entity.Event;\nimport com.example.finalpj.fragment.PastFragment;\nimport com.google.android.material.tabs.TabLayout;\n\nimport java.util.ArrayList;\nimport java.util.List;\n\npublic class MainActivity extends AppCompatActivity {\n    private TabLayout tabLayout;\n    private ViewPager viewPager;\n    private String[] titles = new String[]{\"过去\", \"未来\"};\n    private List<Fragment> fragments = new ArrayList<>();\n    private PagerAdapter pagerAdapter;\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        setContentView(R.layout.activity_main);\n        init();\n//        initEvents();\n//        RecyclerView recyclerView = findViewById(R.id.recyclerView);\n//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);\n//        recyclerView.setLayoutManager(linearLayoutManager);\n//        RecordsAdapter recordsAdapter = new RecordsAdapter(eventList);\n//        recyclerView.setAdapter(recordsAdapter);\n//        replaceFragment(new PastFragment());\n    }\n\n    private void init() {\n        tabLayout = findViewById(R.id.tablayout);\n        viewPager = findViewById(R.id.viewpager);\n\n        fragments.add(new PastFragment());\n        fragments.add(new PastFragment());\n\n        for (int i = 0; i < titles.length; i++) {\n            tabLayout.addTab(tabLayout.newTab());\n        }\n\n        tabLayout.setupWithViewPager(viewPager, false);\n        pagerAdapter = new FmPagerAdapter(fragments, getSupportFragmentManager());\n        viewPager.setAdapter(pagerAdapter);\n\n        for (int i = 0; i < titles.length; i++) {\n            tabLayout.getTabAt(i).setText(titles[i]);\n        }\n    }\n\n\n//    private void replaceFragment(Fragment fragment){\n//        FragmentManager fragmentManager = getSupportFragmentManager();\n//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();\n//        fragmentTransaction.replace(R.id.frame, fragment);\n//        fragmentTransaction.addToBackStack(null);\n//        fragmentTransaction.commit();\n//    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/finalpj/MainActivity.java	(revision ccc1044f1d8d7932750f39bbb4554153a1c95f30)
++++ app/src/main/java/com/example/finalpj/MainActivity.java	(date 1622948681559)
+@@ -1,21 +1,14 @@
+ package com.example.finalpj;
+ 
+-import androidx.annotation.NonNull;
+ import androidx.appcompat.app.AppCompatActivity;
+ import androidx.fragment.app.Fragment;
+-import androidx.fragment.app.FragmentManager;
+-import androidx.fragment.app.FragmentPagerAdapter;
+-import androidx.fragment.app.FragmentTransaction;
+-import androidx.recyclerview.widget.LinearLayoutManager;
+-import androidx.recyclerview.widget.RecyclerView;
+ import androidx.viewpager.widget.PagerAdapter;
+ import androidx.viewpager.widget.ViewPager;
+ 
+ import android.os.Bundle;
+ 
+ import com.example.finalpj.adapter.FmPagerAdapter;
+-import com.example.finalpj.adapter.RecordsAdapter;
+-import com.example.finalpj.entity.Event;
++import com.example.finalpj.fragment.FutureFragment;
+ import com.example.finalpj.fragment.PastFragment;
+ import com.google.android.material.tabs.TabLayout;
+ 
+@@ -47,7 +40,7 @@
+         viewPager = findViewById(R.id.viewpager);
+ 
+         fragments.add(new PastFragment());
+-        fragments.add(new PastFragment());
++        fragments.add(new FutureFragment());
+ 
+         for (int i = 0; i < titles.length; i++) {
+             tabLayout.addTab(tabLayout.newTab());
+Index: app/src/main/java/com/example/finalpj/entity/Event.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.finalpj.entity;\n\nimport org.litepal.crud.LitePalSupport;\n\nimport lombok.AllArgsConstructor;\nimport lombok.Builder;\nimport lombok.Data;\nimport lombok.EqualsAndHashCode;\nimport lombok.NoArgsConstructor;\n\n@Builder\n@Data\n@EqualsAndHashCode(callSuper=false)\n@NoArgsConstructor\n@AllArgsConstructor\npublic class Event extends LitePalSupport {\n\n    Integer id;\n    String date;\n    String title;\n    String intro;\n    String details;\n    String image;\n\n    public Event(Integer id, String date, String title, String details) {\n        this.id = id;\n        this.date = date;\n        this.title = title;\n        this.details = details;\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/finalpj/entity/Event.java	(revision ccc1044f1d8d7932750f39bbb4554153a1c95f30)
++++ app/src/main/java/com/example/finalpj/entity/Event.java	(date 1622947429276)
+@@ -28,4 +28,5 @@
+         this.title = title;
+         this.details = details;
+     }
++
+ }
+Index: app/src/main/res/layout/item_even.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<androidx.cardview.widget.CardView xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\n    android:orientation=\"vertical\"\n    android:layout_width=\"match_parent\"\n    android:layout_height=\"wrap_content\"\n    app:cardBackgroundColor=\"#ffffff\"\n    app:cardCornerRadius=\"15dp\"\n    android:layout_margin=\"15dp\"\n    android:elevation=\"10dp\">\n    <androidx.constraintlayout.widget.ConstraintLayout\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"wrap_content\">\n        <androidx.constraintlayout.widget.ConstraintLayout\n            android:id=\"@+id/layout_title\"\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"wrap_content\"\n            app:layout_constraintTop_toTopOf=\"parent\"\n            app:layout_constraintLeft_toLeftOf=\"parent\"\n            android:layout_marginHorizontal=\"10dp\"\n            android:layout_marginTop=\"10dp\"\n            android:paddingBottom=\"10dp\"\n            android:background=\"@drawable/bottom_border\">\n            <TextView\n                android:layout_width=\"wrap_content\"\n                android:layout_height=\"wrap_content\"\n                android:id=\"@+id/title\"\n                app:layout_constraintLeft_toLeftOf=\"parent\"\n                app:layout_constraintBottom_toBottomOf=\"parent\"\n                android:layout_marginBottom=\"5dp\"/>\n            <TextView\n                android:layout_width=\"wrap_content\"\n                android:layout_height=\"match_parent\"\n                android:text=\"100\"\n                app:layout_constraintRight_toLeftOf=\"@id/text_day\"\n                android:layout_marginRight=\"10dp\"\n                android:textSize=\"30sp\"\n                style=\"bold\" />\n            <TextView\n                android:id=\"@+id/text_day\"\n                android:layout_width=\"wrap_content\"\n                android:layout_height=\"wrap_content\"\n                app:layout_constraintRight_toRightOf=\"parent\"\n                app:layout_constraintBottom_toBottomOf=\"parent\"\n                android:text=\"天\"\n                android:layout_marginBottom=\"5dp\">\n            </TextView>\n        </androidx.constraintlayout.widget.ConstraintLayout>\n\n        <TextView\n            app:layout_constraintTop_toBottomOf=\"@id/layout_title\"\n            android:layout_width=\"wrap_content\"\n            android:layout_height=\"wrap_content\"\n            app:layout_constraintLeft_toLeftOf=\"parent\"\n            android:id=\"@+id/tv_time\"\n            android:layout_marginTop=\"15dp\"\n            android:layout_marginLeft=\"10dp\">\n        </TextView>\n\n        <TextView\n            app:layout_constraintTop_toBottomOf=\"@id/tv_time\"\n            app:layout_constraintLeft_toLeftOf=\"parent\"\n            android:layout_width=\"wrap_content\"\n            android:layout_height=\"wrap_content\"\n            android:id=\"@+id/details\"\n            android:layout_marginTop=\"15dp\"\n            android:layout_marginLeft=\"10dp\"\n            app:layout_constraintBottom_toBottomOf=\"parent\"\n            android:layout_marginBottom=\"10dp\">\n        </TextView>\n\n        <ImageView\n            android:layout_width=\"0dp\"\n            android:layout_height=\"0dp\"\n            android:id=\"@+id/item_image\"\n            app:layout_constraintRight_toRightOf=\"parent\"\n            app:layout_constraintTop_toBottomOf=\"@id/layout_title\"\n            app:layout_constraintBottom_toBottomOf=\"parent\"\n            app:layout_constraintDimensionRatio=\"1:1\"\n            app:srcCompat=\"@drawable/enablement\"\n            android:scaleType=\"centerCrop\"\n            android:layout_margin=\"10dp\">\n        </ImageView>\n    </androidx.constraintlayout.widget.ConstraintLayout>\n\n\n</androidx.cardview.widget.CardView>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/item_even.xml	(revision ccc1044f1d8d7932750f39bbb4554153a1c95f30)
++++ app/src/main/res/layout/item_even.xml	(date 1622949983584)
+@@ -29,9 +29,9 @@
+                 app:layout_constraintBottom_toBottomOf="parent"
+                 android:layout_marginBottom="5dp"/>
+             <TextView
++                android:id="@+id/countdown"
+                 android:layout_width="wrap_content"
+                 android:layout_height="match_parent"
+-                android:text="100"
+                 app:layout_constraintRight_toLeftOf="@id/text_day"
+                 android:layout_marginRight="10dp"
+                 android:textSize="30sp"
+Index: app/src/main/java/com/example/finalpj/adapter/RecordsAdapter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.finalpj.adapter;\n\nimport android.view.LayoutInflater;\nimport android.view.View;\nimport android.view.ViewGroup;\nimport android.widget.ImageView;\nimport android.widget.TextView;\n\nimport androidx.annotation.NonNull;\nimport androidx.recyclerview.widget.RecyclerView;\n\nimport com.example.finalpj.R;\nimport com.example.finalpj.entity.Event;\nimport com.example.finalpj.utils.BitmapToStringUtil;\n\nimport java.util.List;\n\npublic class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.ViewHolder> {\n\n    private List<Event> events;\n\n    static class ViewHolder extends RecyclerView.ViewHolder {\n\n        TextView date;\n        TextView title;\n        TextView details;\n        ImageView imageView;\n\n        public ViewHolder(@NonNull View itemView) {\n            super(itemView);\n            date = (TextView) itemView.findViewById(R.id.tv_time);\n            title = (TextView) itemView.findViewById(R.id.title);\n            details = (TextView) itemView.findViewById(R.id.details);\n            imageView = (ImageView) itemView.findViewById(R.id.item_image);\n        }\n    }\n\n    public RecordsAdapter(List<Event> events) {\n        this.events = events;\n    }\n\n    @NonNull\n    @Override\n    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {\n        View view = LayoutInflater.from(parent.getContext())\n                .inflate(R.layout.item_even, parent, false);\n        ViewHolder viewHolder = new ViewHolder(view);\n        return viewHolder;\n    }\n\n    @Override\n    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {\n        Event event = events.get(position);\n        holder.date.setText(event.getDate());\n        holder.title.setText(event.getTitle());\n        holder.details.setText(event.getDetails());\n//        holder.imageView.setImageBitmap(BitmapToStringUtil.convertStringToIcon(event.getImage()));\n    }\n\n\n    @Override\n    public int getItemCount() {\n        return events.size();\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/finalpj/adapter/RecordsAdapter.java	(revision ccc1044f1d8d7932750f39bbb4554153a1c95f30)
++++ app/src/main/java/com/example/finalpj/adapter/RecordsAdapter.java	(date 1622950108484)
+@@ -45,6 +45,7 @@
+         View view = LayoutInflater.from(parent.getContext())
+                 .inflate(R.layout.item_even, parent, false);
+         ViewHolder viewHolder = new ViewHolder(view);
++        viewHolder.details.setText("123");
+         return viewHolder;
+     }
+ 
+@@ -54,6 +55,7 @@
+         holder.date.setText(event.getDate());
+         holder.title.setText(event.getTitle());
+         holder.details.setText(event.getDetails());
++
+ //        holder.imageView.setImageBitmap(BitmapToStringUtil.convertStringToIcon(event.getImage()));
+     }
+ 
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\n  <component name=\"GradleSettings\">\n    <option name=\"linkedExternalProjectsSettings\">\n      <GradleProjectSettings>\n        <option name=\"testRunner\" value=\"PLATFORM\" />\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\n        <option name=\"modules\">\n          <set>\n            <option value=\"$PROJECT_DIR$\" />\n            <option value=\"$PROJECT_DIR$/app\" />\n          </set>\n        </option>\n        <option name=\"resolveModulePerSourceSet\" value=\"false\" />\n<<<<<<< HEAD\n=======\n        <option name=\"testRunner\" value=\"PLATFORM\" />\n        <option name=\"useQualifiedModuleNames\" value=\"true\" />\n>>>>>>> cbd18a12dea354789f8088361376e96eb8512552\n      </GradleProjectSettings>\n    </option>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/gradle.xml	(revision ccc1044f1d8d7932750f39bbb4554153a1c95f30)
++++ .idea/gradle.xml	(date 1622909105354)
+@@ -4,6 +4,7 @@
+   <component name="GradleSettings">
+     <option name="linkedExternalProjectsSettings">
+       <GradleProjectSettings>
++        <option name="delegatedBuild" value="true" />
+         <option name="testRunner" value="PLATFORM" />
+         <option name="distributionType" value="DEFAULT_WRAPPED" />
+         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+@@ -14,11 +15,6 @@
+           </set>
+         </option>
+         <option name="resolveModulePerSourceSet" value="false" />
+-<<<<<<< HEAD
+-=======
+-        <option name="testRunner" value="PLATFORM" />
+-        <option name="useQualifiedModuleNames" value="true" />
+->>>>>>> cbd18a12dea354789f8088361376e96eb8512552
+       </GradleProjectSettings>
+     </option>
+   </component>
