@@ -4,8 +4,13 @@
     package="com.example.finalpj">
 
     <uses-sdk tools:overrideLibrary="com.loper7.date_time_picker" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
+        android:requestLegacyExternalStorage="true"
         android:name="org.litepal.LitePalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,16 +20,26 @@
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="stateHidden|adjustResize"
         tools:ignore="MissingClass">
-        <activity android:name=".activity.EditActivity"></activity>
+        <activity android:name=".DisplayActivity"></activity>
+        <activity android:name=".EditActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".FirstBloodActivity" />
         <activity android:name=".EnablementActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.finalpj.EditActivity"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
+
 
 </manifest>

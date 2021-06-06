@@ -1,7 +1,10 @@
-package com.example.finalpj.activity;
+package com.example.finalpj;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.ContentUris;
 import android.content.Context;
@@ -26,6 +29,8 @@ import com.example.finalpj.entity.Event;
 import com.example.finalpj.utils.DBUtil;
 import com.example.finalpj.utils.FileUtil;
 import com.loper7.date_time_picker.DateTimePicker;
+
+import org.apache.commons.lang3.StringUtils;
 
 import static org.litepal.LitePalApplication.getContext;
 
@@ -57,7 +62,13 @@ public class EditActivity extends AppCompatActivity {
         eventDateTimePicker = findViewById(R.id.event_date_time_picker);
         eventImageView = findViewById(R.id.event_image_view);
         saveEventButton.setOnClickListener(view -> saveEvent());
-        eventImageView.setOnClickListener(view -> openAlbum());
+        eventImageView.setOnClickListener(view -> {
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(EditActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, CHOOSE_PHOTO);
+            } else {
+                openAlbum();
+            }
+        });
     }
 
     private void saveEvent() {
@@ -66,7 +77,7 @@ public class EditActivity extends AppCompatActivity {
         String eventDetails = eventDetailsEditText.getText().toString();
         Long eventDate = eventDateTimePicker.getDrawingTime();
         String eventImage = FileUtil.imageToBase64(imagePath);
-        if (eventTitle != null && !eventTitle.equals("")) {
+        if (StringUtils.isNotBlank(eventTitle)) {
             Event event = Event.builder()
                     .title(eventTitle)
                     .intro(eventIntro)
@@ -74,10 +85,15 @@ public class EditActivity extends AppCompatActivity {
                     .date(eventDate)
                     .image(eventImage).build();
             boolean isSuccess = DBUtil.insertEvent(event);
-            if (!isSuccess) {
-                Log.e("eventInsert", "event insertion failed");
+            if (isSuccess) {
+                Log.i("saveInsert", "event insertion succeed");
+                Toast.makeText(EditActivity.this, "Success", Toast.LENGTH_SHORT).show();
+            } else {
+                Log.e("saveInsert", "event insertion failed");
+                Toast.makeText(EditActivity.this, "Error", Toast.LENGTH_SHORT).show();
             }
         }
+        finish();
     }
 
     // Camera and Album

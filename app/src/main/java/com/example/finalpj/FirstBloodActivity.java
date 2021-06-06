@@ -7,20 +7,15 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
-import com.example.finalpj.activity.EditActivity;
 import com.loper7.date_time_picker.*;
 
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.util.logging.Logger;
 
 public class FirstBloodActivity extends AppCompatActivity implements View.OnClickListener {
 

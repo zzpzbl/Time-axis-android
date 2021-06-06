@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/pic01"
-    tools:context=".activity.EditActivity"
+    tools:context=".EditActivity"
     >
 
     <com.loper7.date_time_picker.DateTimePicker
@@ -114,7 +114,7 @@
             android:layout_height="150dp"
             android:layout_marginTop="30dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/pic02"
+            android:src="@drawable/pic05"
             app:layout_constraintLeft_toRightOf="@+id/event_image_text"
             app:layout_constraintTop_toBottomOf="@id/event_details_edit_text" />
 
