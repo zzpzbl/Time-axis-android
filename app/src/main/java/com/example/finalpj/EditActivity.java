@@ -27,8 +27,10 @@ import android.widget.Toast;
 import com.example.finalpj.R;
 import com.example.finalpj.entity.Event;
 import com.example.finalpj.utils.DBUtil;
+import com.example.finalpj.utils.DateUtil;
 import com.example.finalpj.utils.FileUtil;
 import com.loper7.date_time_picker.DateTimePicker;
+import com.loper7.date_time_picker.number_picker.NumberPicker;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -44,6 +46,7 @@ public class EditActivity extends AppCompatActivity {
     private DateTimePicker eventDateTimePicker;
     private Context context;
     private String imagePath = null;
+    private Long eventDateTime;
     public static final int CHOOSE_PHOTO = 1;
 
     @Override
@@ -75,7 +78,7 @@ public class EditActivity extends AppCompatActivity {
         String eventTitle = eventTitleEditText.getText().toString();
         String eventIntro = eventIntroEditText.getText().toString();
         String eventDetails = eventDetailsEditText.getText().toString();
-        Long eventDate = eventDateTimePicker.getDrawingTime();
+        Long eventDate = DateUtil.getTimeStampFromDateTimePicker(eventDateTimePicker);
         String eventImage = FileUtil.imageToBase64(imagePath);
         if (StringUtils.isNotBlank(eventTitle)) {
             Event event = Event.builder()
