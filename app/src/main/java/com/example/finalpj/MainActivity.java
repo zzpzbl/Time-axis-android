@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 
 import com.example.finalpj.adapter.FmPagerAdapter;
 import com.example.finalpj.fragment.FutureFragment;
@@ -21,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     private String[] titles = new String[]{"过去", "未来"};
     private List<Fragment> fragments = new ArrayList<>();
     private PagerAdapter pagerAdapter;
+    private Button addEventButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private void init() {
         tabLayout = findViewById(R.id.tablayout);
         viewPager = findViewById(R.id.viewpager);
+        addEventButton = findViewById(R.id.button_add);
 
         fragments.add(new PastFragment());
         fragments.add(new FutureFragment());
@@ -49,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager, false);
         pagerAdapter = new FmPagerAdapter(fragments, getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
+        addEventButton.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, EditActivity.class);
+            startActivity(intent);
+        });
 
         for (int i = 0; i < titles.length; i++) {
             tabLayout.getTabAt(i).setText(titles[i]);

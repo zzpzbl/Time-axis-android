@@ -24,11 +24,6 @@ public class FirstBloodActivity extends AppCompatActivity implements View.OnClic
     private SharedPreferences preferences;
     private Button finish;
 
-    /**
-     *
-     */
-    private Button jumpToEditPageButton;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,12 +41,6 @@ public class FirstBloodActivity extends AppCompatActivity implements View.OnClic
         dateTimePicker = findViewById(R.id.dateTimePicker);
         finish = findViewById(R.id.finish);
         finish.setOnClickListener(this);
-
-        jumpToEditPageButton = findViewById(R.id.jump_to_edit_page_button);
-        jumpToEditPageButton.setOnClickListener((view) -> {
-            Intent intent = new Intent(FirstBloodActivity.this, EditActivity.class);
-            startActivity(intent);
-        });
     }
 
     private void initSharedPreferences() {
