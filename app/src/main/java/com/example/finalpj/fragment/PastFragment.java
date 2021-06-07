@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.finalpj.R;
 import com.example.finalpj.adapter.RecordsAdapter;
 import com.example.finalpj.entity.Event;
+import com.example.finalpj.utils.DBUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,11 +36,8 @@ public class PastFragment extends Fragment {
         return view;
     }
 
-
     private void initEvents() {
-        Event event = new Event(1, 1622431724000L, "来到这个世界已经", "pkmkmp");
-        for (int i = 0; i < 10; ++i) {
-            eventList.add(event);
-        }
+        eventList = DBUtil.selectAllEvents();
     }
+
 }

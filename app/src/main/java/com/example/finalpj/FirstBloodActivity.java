@@ -12,10 +12,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
 import com.loper7.date_time_picker.*;
+import com.loper7.date_time_picker.number_picker.NumberPicker;
 
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.logging.Logger;
 
 public class FirstBloodActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -23,6 +26,9 @@ public class FirstBloodActivity extends AppCompatActivity implements View.OnClic
     private DateTimePicker dateTimePicker;
     private SharedPreferences preferences;
     private Button finish;
+    private NumberPicker numberPickerOfYear;
+    private NumberPicker numberPickerOfMonth;
+    private NumberPicker numberPickerOfDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,9 @@ public class FirstBloodActivity extends AppCompatActivity implements View.OnClic
     private void initComponent() {
         name = findViewById(R.id.name);
         dateTimePicker = findViewById(R.id.dateTimePicker);
+        numberPickerOfYear = dateTimePicker.findViewById(R.id.np_datetime_year);
+        numberPickerOfMonth = dateTimePicker.findViewById(R.id.np_datetime_month);
+        numberPickerOfDay = dateTimePicker.findViewById(R.id.np_datetime_day);
         finish = findViewById(R.id.finish);
         finish.setOnClickListener(this);
     }
@@ -76,6 +85,8 @@ public class FirstBloodActivity extends AppCompatActivity implements View.OnClic
         }
         return super.dispatchKeyEvent(event);
     }
+
+
 
 //    private boolean isShouldHideInput(View v, MotionEvent event) {
 //        if (v != null && (v instanceof EditText)) {

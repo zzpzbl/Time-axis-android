@@ -61,7 +61,7 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.ViewHold
         holder.title.setText(event.getTitle());
         holder.details.setText(event.getDetails());
         holder.countdown.setText(interval.toString());
-//        holder.imageView.setImageBitmap(BitmapToStringUtil.convertStringToIcon(event.getImage()));
+        holder.imageView.setImageBitmap(BitmapToStringUtil.convertStringToIcon(event.getImage()));
     }
 
 
