@@ -200,7 +200,6 @@ public class EditActivity extends AppCompatActivity {
         Log.i("displayImage", "imagePath:" + imagePath);
         if (imagePath != null) {
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-            //Glide.with(this).load(imagePath).into(photo1);
             eventImageView.setImageBitmap(bitmap);
         } else {
             Toast.makeText(context, "打开图片失败", Toast.LENGTH_SHORT).show();
