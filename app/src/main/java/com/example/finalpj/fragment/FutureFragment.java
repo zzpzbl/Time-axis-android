@@ -15,32 +15,43 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.finalpj.R;
 import com.example.finalpj.adapter.RecordsAdapter;
 import com.example.finalpj.entity.Event;
+import com.example.finalpj.utils.DBUtil;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FutureFragment extends Fragment {
 
-    private List<Event> eventList = new ArrayList<>();
+    private RecyclerView recyclerView;
     private Context context;
+    private Calendar calendar;
+    private List<Event> eventList = new ArrayList<>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragement_past, container, false);
-        context = getContext();
-        initEvents();
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        RecordsAdapter recordsAdapter = new RecordsAdapter(eventList);
-        recyclerView.setAdapter(recordsAdapter);
+        init(view);
         return view;
     }
 
-    void initEvents() {
-        Event event = new Event(1, 1622950124L, "距离这件事情还剩", "pkmkmp");
-        for (int i = 0; i < 10; ++i) {
-            eventList.add(event);
-        }
+    public void init(View view) {
+        context = getContext();
+        calendar = Calendar.getInstance();
+        initEvents();
+        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(new RecordsAdapter(eventList));
+    }
+
+    private void initEvents() {
+        List<Event> events = DBUtil.selectAllEvents();
+        List<Event> pastEvents = events.stream()
+                .filter(event -> event.getDate() >= calendar.getTimeInMillis())
+                .sorted(Comparator.comparingLong(Event::getDate).reversed())
+                .collect(Collectors.toList());
+        this.eventList = pastEvents;
     }
 }
