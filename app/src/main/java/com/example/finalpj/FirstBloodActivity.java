@@ -26,6 +26,7 @@ public class FirstBloodActivity extends AppCompatActivity implements View.OnClic
     private DateTimePicker dateTimePicker;
     private SharedPreferences preferences;
     private Button finish;
+    private Button articleBtn;
     private NumberPicker numberPickerOfYear;
     private NumberPicker numberPickerOfMonth;
     private NumberPicker numberPickerOfDay;
@@ -50,6 +51,13 @@ public class FirstBloodActivity extends AppCompatActivity implements View.OnClic
         numberPickerOfDay = dateTimePicker.findViewById(R.id.np_datetime_day);
         finish = findViewById(R.id.finish);
         finish.setOnClickListener(this);
+
+        articleBtn = findViewById(R.id.jmpArticle);
+        articleBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(FirstBloodActivity.this, DisplayActivity.class);
+            startActivity(intent);
+        });
+
     }
 
     private void initSharedPreferences() {

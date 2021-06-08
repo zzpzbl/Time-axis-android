@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/pic01"
     tools:context=".EditActivity"
     >
@@ -24,11 +23,13 @@
         />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_edit_form"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:background="@drawable/pic03"
+        android:layout_margin="22dp"
+        android:background="@drawable/around_border"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/event_date_time_picker"
         >
 
@@ -38,19 +39,22 @@
             android:textSize="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:layout_marginLeft="10dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/event_title_edit_text"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/event_title_edit_text"
+            app:layout_constraintBottom_toBottomOf="@id/event_title_edit_text"
+            />
 
         <EditText
             android:id="@+id/event_title_edit_text"
             android:hint="写下这个事件的标题吧~"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
+            android:layout_marginRight="10dp"
             app:layout_constraintLeft_toRightOf="@id/event_title_text"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -59,20 +63,25 @@
             android:textSize="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:layout_marginLeft="10dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/event_intro_edit_text"
-            app:layout_constraintTop_toBottomOf="@id/event_title_edit_text" />
+            app:layout_constraintTop_toBottomOf="@id/event_title_edit_text"
+            app:layout_constraintTop_toTopOf="@id/event_intro_edit_text"
+            app:layout_constraintBottom_toBottomOf="@id/event_intro_edit_text"
+            />
 
         <EditText
             android:id="@+id/event_intro_edit_text"
             android:hint="简单描述一下这个事件~"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
+            android:layout_marginRight="10dp"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toRightOf="@id/event_intro_text"
-            app:layout_constraintTop_toBottomOf="@id/event_title_edit_text" />
+            app:layout_constraintTop_toBottomOf="@id/event_title_edit_text"
+            />
 
         <TextView
             android:id="@+id/event_details_text"
@@ -80,18 +89,22 @@
             android:textSize="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:layout_marginLeft="10dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/event_details_edit_text"
-            app:layout_constraintTop_toBottomOf="@id/event_intro_edit_text" />
+            app:layout_constraintTop_toBottomOf="@id/event_intro_edit_text"
+            app:layout_constraintTop_toTopOf="@id/event_details_edit_text"
+            app:layout_constraintBottom_toBottomOf="@id/event_details_edit_text"
+            />
 
         <EditText
             android:id="@+id/event_details_edit_text"
             android:hint="详细说说这件事吧~"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
+            android:layout_marginRight="10dp"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toRightOf="@id/event_details_text"
             app:layout_constraintTop_toBottomOf="@id/event_intro_edit_text" />
 
@@ -115,6 +128,8 @@
             android:layout_marginTop="30dp"
             android:scaleType="centerCrop"
             android:src="@drawable/pic05"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/event_image_text"
             app:layout_constraintTop_toBottomOf="@id/event_details_edit_text" />
 

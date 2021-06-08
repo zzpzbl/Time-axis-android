@@ -24,13 +24,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.finalpj.R;
 import com.example.finalpj.entity.Event;
 import com.example.finalpj.utils.DBUtil;
 import com.example.finalpj.utils.DateUtil;
 import com.example.finalpj.utils.FileUtil;
 import com.loper7.date_time_picker.DateTimePicker;
-import com.loper7.date_time_picker.number_picker.NumberPicker;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -58,6 +56,7 @@ public class EditActivity extends AppCompatActivity {
     }
 
     private void initComponent() {
+        findViewById(R.id.layout_edit_form).getBackground().setAlpha(220);
         saveEventButton = findViewById(R.id.save_event_button);
         eventTitleEditText = findViewById(R.id.event_title_edit_text);
         eventIntroEditText = findViewById(R.id.event_intro_edit_text);
