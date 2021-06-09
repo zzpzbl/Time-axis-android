@@ -29,7 +29,7 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.ViewHold
 
         TextView date;
         TextView title;
-        TextView details;
+        TextView intro;
         TextView countdown;
         ImageView imageView;
 
@@ -37,7 +37,7 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.ViewHold
             super(itemView);
             date = (TextView) itemView.findViewById(R.id.tv_time);
             title = (TextView) itemView.findViewById(R.id.title);
-            details = (TextView) itemView.findViewById(R.id.details);
+            intro = (TextView) itemView.findViewById(R.id.intro);
             countdown = itemView.findViewById(R.id.countdown);
             imageView = (ImageView) itemView.findViewById(R.id.item_image);
         }
@@ -63,7 +63,7 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.ViewHold
         Long interval = Math.abs(events.get(position).getDate() - new Timestamp(System.currentTimeMillis()).getTime()) / (1000 * 3600 * 24);
         holder.date.setText(DateUtil.timestampToDateStr(event.getDate()));
         holder.title.setText(event.getTitle());
-        holder.details.setText(event.getDetails());
+        holder.intro.setText(event.getIntro());
         holder.countdown.setText(interval.toString());
         holder.imageView.setImageBitmap(BitmapToStringUtil.convertStringToIcon(event.getImage()));
 
