@@ -1,5 +1,7 @@
 package com.example.finalpj.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.finalpj.DisplayActivity;
 import com.example.finalpj.R;
 import com.example.finalpj.entity.Event;
 import com.example.finalpj.utils.BitmapToStringUtil;
@@ -19,6 +22,7 @@ import java.util.List;
 
 public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.ViewHolder> {
 
+    private Context context;
     private List<Event> events;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -39,8 +43,9 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.ViewHold
         }
     }
 
-    public RecordsAdapter(List<Event> events) {
+    public RecordsAdapter(Context context, List<Event> events) {
         this.events = events;
+        this.context = context;
     }
 
     @NonNull
@@ -49,7 +54,6 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.ViewHold
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_even, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
-
         return viewHolder;
     }
 
@@ -62,6 +66,12 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.ViewHold
         holder.details.setText(event.getDetails());
         holder.countdown.setText(interval.toString());
         holder.imageView.setImageBitmap(BitmapToStringUtil.convertStringToIcon(event.getImage()));
+
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, DisplayActivity.class);
+            intent.putExtra("event", event);
+            context.startActivity(intent);
+        });
     }
 
 

@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private String[] titles = new String[]{"过去", "未来"};
-    private List<Fragment> fragments = new ArrayList<>();
+    private List<Fragment> fragments;
     private PagerAdapter pagerAdapter;
     private Button addEventButton;
     private EditText searchEditText;
@@ -41,24 +41,31 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        context = getApplicationContext();
-        init();
+        initComponent();
     }
 
-    private void init() {
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        flushPage();
+    }
+
+    private void initComponent() {
+        context = MainActivity.this;
         tabLayout = findViewById(R.id.tablayout);
         viewPager = findViewById(R.id.viewpager);
         addEventButton = findViewById(R.id.button_add);
         searchEditText = findViewById(R.id.search_edit_text);
         recyclerView = findViewById(R.id.recyclerView);
-        fragments.add(new PastFragment());
-        fragments.add(new FutureFragment());
+        fragments = new ArrayList<>();
+        fragments.add(new PastFragment(context));
+        fragments.add(new FutureFragment(context));
+        pagerAdapter = new FmPagerAdapter(fragments, getSupportFragmentManager());
+        viewPager.setAdapter(pagerAdapter);
         for (int i = 0; i < titles.length; i++) {
             tabLayout.addTab(tabLayout.newTab());
         }
         tabLayout.setupWithViewPager(viewPager, false);
-        pagerAdapter = new FmPagerAdapter(fragments, getSupportFragmentManager());
-        viewPager.setAdapter(pagerAdapter);
         addEventButton.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, EditActivity.class);
             startActivity(intent);
@@ -67,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 String text = textView.getText().toString();
                 List<Event> events = DBUtil.selectEventFuzzily(text);
-                RecordsAdapter recordsAdapter = new RecordsAdapter(events);
+                RecordsAdapter recordsAdapter = new RecordsAdapter(context, events);
                 recyclerView.setAdapter(recordsAdapter);
                 closeSoftKeyBoard(searchEditText, context);
                 return true;
@@ -77,6 +84,12 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < titles.length; i++) {
             tabLayout.getTabAt(i).setText(titles[i]);
         }
+    }
+
+    public void flushPage() {
+        fragments = new ArrayList<>();
+        fragments.add(new PastFragment(context));
+        fragments.add(new FutureFragment(context));
     }
 
     private void closeSoftKeyBoard(EditText searchEditText, Context context) {

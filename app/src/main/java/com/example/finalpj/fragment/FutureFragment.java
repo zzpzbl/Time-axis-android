@@ -30,6 +30,12 @@ public class FutureFragment extends Fragment {
     private Calendar calendar;
     private List<Event> eventList = new ArrayList<>();
 
+    public FutureFragment() {}
+
+    public FutureFragment(Context context) {
+        this.context = context;
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragement_past, container, false);
@@ -43,7 +49,7 @@ public class FutureFragment extends Fragment {
         initEvents();
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        recyclerView.setAdapter(new RecordsAdapter(eventList));
+        recyclerView.setAdapter(new RecordsAdapter(context, eventList));
     }
 
     private void initEvents() {

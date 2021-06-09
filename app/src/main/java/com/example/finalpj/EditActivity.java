@@ -25,11 +25,13 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.finalpj.entity.Event;
+import com.example.finalpj.utils.BitmapToStringUtil;
 import com.example.finalpj.utils.DBUtil;
 import com.example.finalpj.utils.DateUtil;
 import com.example.finalpj.utils.FileUtil;
 import com.loper7.date_time_picker.DateTimePicker;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import static org.litepal.LitePalApplication.getContext;
@@ -43,6 +45,7 @@ public class EditActivity extends AppCompatActivity {
     private ImageView eventImageView;
     private DateTimePicker eventDateTimePicker;
     private Context context;
+    private Event event;
     private String imagePath = null;
     private Long eventDateTime;
     public static final int CHOOSE_PHOTO = 1;
@@ -51,11 +54,11 @@ public class EditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
-        initComponent();
-        context = getContext();
+        init();
     }
 
-    private void initComponent() {
+    private void init() {
+        context = getContext();
         findViewById(R.id.layout_edit_form).getBackground().setAlpha(220);
         saveEventButton = findViewById(R.id.save_event_button);
         eventTitleEditText = findViewById(R.id.event_title_edit_text);
@@ -71,6 +74,18 @@ public class EditActivity extends AppCompatActivity {
                 openAlbum();
             }
         });
+        initEvent();
+    }
+
+    private void initEvent() {
+        event = (Event) getIntent().getSerializableExtra("event");
+        if (ObjectUtils.allNotNull(event)) {
+            eventDateTimePicker.setDefaultMillisecond(event.getDate());
+            eventTitleEditText.setText(event.getTitle());
+            eventIntroEditText.setText(event.getIntro());
+            eventDetailsEditText.setText(event.getDetails());
+            eventImageView.setImageBitmap(BitmapToStringUtil.convertStringToIcon(event.getImage()));
+        }
     }
 
     private void saveEvent() {
@@ -80,22 +95,43 @@ public class EditActivity extends AppCompatActivity {
         Long eventDate = DateUtil.getTimeStampFromDateTimePicker(eventDateTimePicker);
         String eventImage = FileUtil.imageToBase64(imagePath);
         if (StringUtils.isNotBlank(eventTitle)) {
-            Event event = Event.builder()
-                    .title(eventTitle)
-                    .intro(eventIntro)
-                    .details(eventDetails)
-                    .date(eventDate)
-                    .image(eventImage).build();
-            boolean isSuccess = DBUtil.insertEvent(event);
-            if (isSuccess) {
-                Log.i("saveInsert", "event insertion succeed");
-                Toast.makeText(EditActivity.this, "Success", Toast.LENGTH_SHORT).show();
+            if (ObjectUtils.allNotNull(event)) {
+                updateCurrentEvent(eventTitle, eventIntro, eventDetails, eventDate, eventImage);
             } else {
-                Log.e("saveInsert", "event insertion failed");
-                Toast.makeText(EditActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                addNewEvent(eventTitle, eventIntro, eventDetails, eventDate, eventImage);
             }
         }
         finish();
+    }
+
+    private void addNewEvent(String eventTitle, String eventIntro, String eventDetails, Long eventDate, String eventImage) {
+        event = Event.builder()
+                .title(eventTitle)
+                .intro(eventIntro)
+                .details(eventDetails)
+                .date(eventDate)
+                .image(eventImage).build();
+        boolean isSuccess = DBUtil.insertEvent(event);
+        if (isSuccess) {
+            Log.i("saveInsert", "event insertion succeed");
+            Toast.makeText(EditActivity.this, "Success", Toast.LENGTH_SHORT).show();
+        } else {
+            Log.e("saveInsert", "event insertion failed");
+            Toast.makeText(EditActivity.this, "Error", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void updateCurrentEvent(String eventTitle, String eventIntro, String eventDetails, Long eventDate, String eventImage) {
+        event.setTitle(eventTitle);
+        event.setIntro(eventIntro);
+        event.setDetails(eventDetails);
+        event.setDate(eventDate);
+        event.setImage(eventImage);
+        int update = DBUtil.updateEvent(event);
+        Log.i("updateCurrentEvent", "更新行数: " + update);
+        if (update == 1) {
+            Toast.makeText(EditActivity.this, "Success", Toast.LENGTH_SHORT).show();
+        }
     }
 
     // Camera and Album

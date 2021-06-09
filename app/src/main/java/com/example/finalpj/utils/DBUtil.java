@@ -1,9 +1,12 @@
 package com.example.finalpj.utils;
 
+import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.finalpj.entity.Event;
+
+import org.apache.commons.lang3.ObjectUtils;
 import org.litepal.LitePal;
 import java.util.List;
 
@@ -36,5 +39,15 @@ public class DBUtil {
     public static boolean insertEvent(Event event) {
         Log.i("insertEvent", event.toString());
         return event.save();
+    }
+
+    public static int updateEvent(Event event) {
+        Log.i("updateEvent", event.toString());
+        return event.update(event.getId());
+    }
+
+    public static int deleteEvent(Event event) {
+        Log.i("deleteEvent", event.toString());
+        return LitePal.delete(Event.class, event.getId());
     }
 }
