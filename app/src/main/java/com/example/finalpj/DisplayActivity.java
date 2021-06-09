@@ -35,8 +35,14 @@ public class DisplayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display);
-        event = (Event) getIntent().getSerializableExtra("event");
         init();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        event = (Event) getIntent().getSerializableExtra("event");
+        event = DBUtil.selectEventById(event.getId());
         if (ObjectUtils.allNotNull(event)) {
             eventTitle.setText(event.getTitle());
             eventDate.setText(DateUtil.timestampToDateStr(event.getDate()));

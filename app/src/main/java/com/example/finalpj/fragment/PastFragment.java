@@ -2,6 +2,7 @@ package com.example.finalpj.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,12 +54,13 @@ public class PastFragment extends Fragment {
     }
 
     private void initEvents() {
+        Log.i("initEvent", "初始化");
         List<Event> events = DBUtil.selectAllEvents();
-        List<Event> futureEvents = events.stream()
+        List<Event> pastEvents = events.stream()
                 .filter(event -> event.getDate() < calendar.getTimeInMillis())
                 .sorted(Comparator.comparingLong(Event::getDate).reversed())
                 .collect(Collectors.toList());
-        this.eventList = futureEvents;
+        this.eventList = pastEvents;
     }
 
 }

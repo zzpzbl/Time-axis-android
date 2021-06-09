@@ -2,6 +2,8 @@ package com.example.finalpj;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
@@ -9,6 +11,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -47,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        flushPage();
+        initComponent();
     }
 
     private void initComponent() {
@@ -87,13 +90,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void flushPage() {
-        fragments = new ArrayList<>();
+        fragments.clear();
         fragments.add(new PastFragment(context));
         fragments.add(new FutureFragment(context));
+        pagerAdapter.notifyDataSetChanged();
+        Log.i("flushPage", "触发 flushPage");
     }
 
     private void closeSoftKeyBoard(EditText searchEditText, Context context) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(searchEditText.getWindowToken(), 0);
+    }
+
+    private void replaceFragment(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.recyclerView, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 }

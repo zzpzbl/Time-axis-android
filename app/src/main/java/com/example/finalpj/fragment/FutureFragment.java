@@ -54,10 +54,10 @@ public class FutureFragment extends Fragment {
 
     private void initEvents() {
         List<Event> events = DBUtil.selectAllEvents();
-        List<Event> pastEvents = events.stream()
+        List<Event> futureEvents = events.stream()
                 .filter(event -> event.getDate() >= calendar.getTimeInMillis())
                 .sorted(Comparator.comparingLong(Event::getDate).reversed())
                 .collect(Collectors.toList());
-        this.eventList = pastEvents;
+        this.eventList = futureEvents;
     }
 }
