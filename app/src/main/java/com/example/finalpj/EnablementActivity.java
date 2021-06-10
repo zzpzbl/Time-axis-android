@@ -19,11 +19,7 @@ public class EnablementActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_launch);
-        SharedPreferences.Editor editor = null;
         this.preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        editor = preferences.edit();
-        editor.clear();
-        editor.apply();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
