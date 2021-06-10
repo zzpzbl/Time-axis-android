@@ -23,7 +23,7 @@ public class LaunchActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                String name = preferences.getString("USERNAME", "empty");
+                String name = preferences.getString("BIRTHDAY", "empty");
                 Intent intent = null;
                 if (name.equals("empty")) {
                     intent = new Intent(LaunchActivity.this, WelcomeActivity.class);
