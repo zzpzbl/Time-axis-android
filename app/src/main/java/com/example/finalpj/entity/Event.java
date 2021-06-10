@@ -22,14 +22,7 @@ public class Event extends LitePalSupport implements Serializable {
     String title;
     String intro;
     String details;
-    Integer eventType;
+    int eventType;
     String image;
 
-
-    public Event(Integer id, Long date, String title, String details) {
-        this.id = id;
-        this.date = date;
-        this.title = title;
-        this.details = details;
-    }
 }
