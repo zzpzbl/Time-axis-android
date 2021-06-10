@@ -19,9 +19,13 @@ import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.finalpj.entity.Event;
@@ -44,10 +48,11 @@ public class EditActivity extends AppCompatActivity {
     private EditText eventDetailsEditText;
     private ImageView eventImageView;
     private DateTimePicker eventDateTimePicker;
+    private Spinner eventTypeSpinner;
     private Context context;
     private Event event;
     private String imagePath = null;
-    private Long eventDateTime;
+    private int optionSelectedPosition = 0;
     public static final int CHOOSE_PHOTO = 1;
 
     @Override
@@ -66,12 +71,29 @@ public class EditActivity extends AppCompatActivity {
         eventDetailsEditText = findViewById(R.id.event_details_edit_text);
         eventDateTimePicker = findViewById(R.id.event_date_time_picker);
         eventImageView = findViewById(R.id.event_image_view);
+        eventTypeSpinner = findViewById(R.id.event_type_spinner);
         saveEventButton.setOnClickListener(view -> saveEvent());
         eventImageView.setOnClickListener(view -> {
             if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(EditActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, CHOOSE_PHOTO);
             } else {
                 openAlbum();
+            }
+        });
+        eventTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                optionSelectedPosition = position;
+                Log.d("onItemSelected", "position: " + position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                if (ObjectUtils.allNotNull(event)) {
+                    optionSelectedPosition = event.getEventType();
+                } else {
+                    optionSelectedPosition = 0;
+                }
             }
         });
         initEvent();
@@ -85,6 +107,7 @@ public class EditActivity extends AppCompatActivity {
             eventIntroEditText.setText(event.getIntro());
             eventDetailsEditText.setText(event.getDetails());
             eventImageView.setImageBitmap(BitmapToStringUtil.convertStringToIcon(event.getImage()));
+            eventTypeSpinner.setSelection(event.getEventType());
         }
     }
 
@@ -94,23 +117,25 @@ public class EditActivity extends AppCompatActivity {
         String eventDetails = eventDetailsEditText.getText().toString();
         Long eventDate = DateUtil.getTimeStampFromDateTimePicker(eventDateTimePicker);
         String eventImage = FileUtil.imageToBase64(imagePath);
+        int eventType = optionSelectedPosition;
         if (StringUtils.isNotBlank(eventTitle)) {
             if (ObjectUtils.allNotNull(event)) {
-                updateCurrentEvent(eventTitle, eventIntro, eventDetails, eventDate, eventImage);
+                updateCurrentEvent(eventTitle, eventIntro, eventDetails, eventDate, eventImage, eventType);
             } else {
-                addNewEvent(eventTitle, eventIntro, eventDetails, eventDate, eventImage);
+                addNewEvent(eventTitle, eventIntro, eventDetails, eventDate, eventImage, eventType);
             }
         }
         finish();
     }
 
-    private void addNewEvent(String eventTitle, String eventIntro, String eventDetails, Long eventDate, String eventImage) {
+    private void addNewEvent(String eventTitle, String eventIntro, String eventDetails, Long eventDate, String eventImage, int eventType) {
         event = Event.builder()
                 .title(eventTitle)
                 .intro(eventIntro)
                 .details(eventDetails)
                 .date(eventDate)
-                .image(eventImage).build();
+                .image(eventImage)
+                .eventType(eventType).build();
         boolean isSuccess = DBUtil.insertEvent(event);
         if (isSuccess) {
             Log.i("saveInsert", "event insertion succeed");
@@ -121,12 +146,13 @@ public class EditActivity extends AppCompatActivity {
         }
     }
 
-    private void updateCurrentEvent(String eventTitle, String eventIntro, String eventDetails, Long eventDate, String eventImage) {
+    private void updateCurrentEvent(String eventTitle, String eventIntro, String eventDetails, Long eventDate, String eventImage, int eventType) {
         event.setTitle(eventTitle);
         event.setIntro(eventIntro);
         event.setDetails(eventDetails);
         event.setDate(eventDate);
         event.setImage(eventImage);
+        event.setEventType(eventType);
         int update = DBUtil.updateEvent(event);
         Log.i("updateCurrentEvent", "更新行数: " + update);
         if (update == 1) {

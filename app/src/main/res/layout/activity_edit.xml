@@ -8,17 +8,30 @@
     tools:context=".EditActivity"
     >
 
+    <Spinner
+        android:id="@+id/event_type_spinner"
+        android:entries="@array/event_type_array"
+        android:spinnerMode="dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/event_date_time_picker"
+        app:layout_constraintBottom_toBottomOf="@id/event_date_time_picker"
+        />
+
+
     <com.loper7.date_time_picker.DateTimePicker
         android:id="@+id/event_date_time_picker"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:showLabel="true"
         app:textSize="16sp"
         app:themeColor="@color/colorTextGrayDark"
         android:layout_marginTop="30dp"
+        android:layout_marginRight="30dp"
         app:layout="@layout/edit_date_picker_segmentation"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         />
 
@@ -153,7 +166,6 @@
             app:layout_constraintTop_toBottomOf="@+id/event_image_view"
             app:layout_constraintBottom_toBottomOf="parent"
             />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

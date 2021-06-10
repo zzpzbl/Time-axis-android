@@ -30,8 +30,8 @@ public class DBUtil {
         return events;
     }
 
-    public static List<Event> selectEventFuzzily(String titlePart) {
-        List<Event> events = LitePal.where("title like %?%", titlePart).find(Event.class);
+    public static List<Event> selectEventFuzzily(String part) {
+        List<Event> events = LitePal.where("title like ? or intro like ?", "%" + part + "%", "%" + part + "%").find(Event.class);
         Log.i("selectEventFuzzily", events.toString());
         return events;
     }

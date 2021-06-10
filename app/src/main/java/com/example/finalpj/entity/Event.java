@@ -22,7 +22,9 @@ public class Event extends LitePalSupport implements Serializable {
     String title;
     String intro;
     String details;
+    Integer eventType;
     String image;
+
 
     public Event(Integer id, Long date, String title, String details) {
         this.id = id;
@@ -30,5 +32,4 @@ public class Event extends LitePalSupport implements Serializable {
         this.title = title;
         this.details = details;
     }
-
 }

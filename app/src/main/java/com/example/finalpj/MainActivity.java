@@ -37,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private PagerAdapter pagerAdapter;
     private Button addEventButton;
     private EditText searchEditText;
-    private RecyclerView recyclerView;
+    private PastFragment pastFragment;
+    private FutureFragment futureFragment;
     private Context context;
 
     @Override
@@ -50,7 +51,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        initComponent();
+        List<Event> events = DBUtil.selectAllEvents();
+        pastFragment.initEvents(events);
+        futureFragment.initEvents(events);
     }
 
     private void initComponent() {
@@ -59,10 +62,11 @@ public class MainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewpager);
         addEventButton = findViewById(R.id.button_add);
         searchEditText = findViewById(R.id.search_edit_text);
-        recyclerView = findViewById(R.id.recyclerView);
+        futureFragment = new FutureFragment(context);
+        pastFragment = new PastFragment(context);
         fragments = new ArrayList<>();
-        fragments.add(new PastFragment(context));
-        fragments.add(new FutureFragment(context));
+        fragments.add(pastFragment);
+        fragments.add(futureFragment);
         pagerAdapter = new FmPagerAdapter(fragments, getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
         for (int i = 0; i < titles.length; i++) {
@@ -77,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 String text = textView.getText().toString();
                 List<Event> events = DBUtil.selectEventFuzzily(text);
-                RecordsAdapter recordsAdapter = new RecordsAdapter(context, events);
-                recyclerView.setAdapter(recordsAdapter);
+                pastFragment.initEvents(events);
+                futureFragment.initEvents(events);
                 closeSoftKeyBoard(searchEditText, context);
                 return true;
             }
@@ -94,19 +98,13 @@ public class MainActivity extends AppCompatActivity {
         fragments.add(new PastFragment(context));
         fragments.add(new FutureFragment(context));
         pagerAdapter.notifyDataSetChanged();
+        /*pagerAdapter = new FmPagerAdapter(fragments, getSupportFragmentManager());
+        viewPager.setAdapter(pagerAdapter);*/
         Log.i("flushPage", "触发 flushPage");
     }
 
     private void closeSoftKeyBoard(EditText searchEditText, Context context) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(searchEditText.getWindowToken(), 0);
-    }
-
-    private void replaceFragment(Fragment fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.recyclerView, fragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
     }
 }

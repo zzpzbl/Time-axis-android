@@ -5,87 +5,69 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/pic01"
+    android:background="@drawable/shape_bg_round_white_5"
     android:fitsSystemWindows="true">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
+        <!--<TextView
             android:id="@+id/text_title"
+            android:textSize="20dp"
+            android:text="时间坐标轴"
+            android:textColor="@color/colorTextGrayLight"
+            android:typeface="normal"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25dp"
-            android:text="欢迎来到时间坐标轴"
-            android:layout_marginTop="10dp"
             android:layout_gravity="left"
-            android:textColor="#20B2AA"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
-        </TextView>
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:id="@+id/name"
-            android:inputType="text"
-            android:textSize="15dp"
-            android:hint="姓名"
-            android:imeOptions="actionDone"
-            app:layout_constraintTop_toBottomOf="@id/text_title"
-            android:layout_marginTop="30dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
-        </EditText>
+            />-->
 
         <TextView
             android:id="@+id/birthday"
+            android:textSize="25dp"
+            android:text="你的生日是？"
+            android:textColor="@color/colorTextGrayLight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15dp"
-            android:text="生日"
-            app:layout_constraintTop_toBottomOf="@id/name"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginLeft="58dp"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
+            >
         </TextView>
 
         <com.loper7.date_time_picker.DateTimePicker
             android:id="@+id/dateTimePicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout="@layout/layout_date_picker_segmentation"
+            app:layout="@layout/edit_date_picker_segmentation"
             app:showLabel="true"
             app:textSize="16sp"
             app:themeColor="@color/colorPrimary"
             app:layout_constraintTop_toBottomOf="@id/birthday"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="50dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             />
 
         <Button
             android:id="@+id/finish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="完成"
-            app:layout_constraintTop_toBottomOf="@id/dateTimePicker"
+            android:textSize="16dp"
+            android:background="@drawable/round_corner_button"
             android:layout_marginTop="30dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" >
-        </Button>
-
-        <Button
-            android:id="@+id/jmpArticle"
+            android:layout_marginBottom="60dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/finish"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="30dp"
-            android:text="跳转至文章" />
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
