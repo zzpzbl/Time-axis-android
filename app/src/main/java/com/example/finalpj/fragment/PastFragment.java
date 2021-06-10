@@ -31,17 +31,11 @@ public class PastFragment extends Fragment {
     private Context context;
     private Calendar calendar;
     private List<Event> eventList = new ArrayList<>();
-    private RecordsAdapter recordsAdapter;
 
     public PastFragment() {}
 
     public PastFragment(Context context) {
         this.context = context;
-    }
-
-    public void setEventList(List<Event> eventList) {
-        this.eventList = eventList;
-        recordsAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -59,11 +53,9 @@ public class PastFragment extends Fragment {
     }
 
     public void initEvents(List<Event> events) {
-        Log.i("initEvent", "初始化");
         this.eventList = buildPastEvents(events);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        recordsAdapter = new RecordsAdapter(context, eventList);
-        recyclerView.setAdapter(recordsAdapter);
+        recyclerView.setAdapter(new RecordsAdapter(context, eventList));
     }
 
     private List<Event> buildPastEvents(List<Event> events) {
@@ -71,6 +63,7 @@ public class PastFragment extends Fragment {
                 .filter(event -> event.getEventType() == EventTypeEnum.ORDINARY.getType() && event.getDate() < calendar.getTimeInMillis())
                 .sorted(Comparator.comparingLong(Event::getDate).reversed())
                 .collect(Collectors.toList());
+        pastEvents.forEach(event -> event.setTitle(event.getTitle() + "    已经"));
         return pastEvents;
     }
 }

@@ -37,10 +37,6 @@ public class FutureFragment extends Fragment {
         this.context = context;
     }
 
-    public void setEventList(List<Event> eventList) {
-        this.eventList = eventList;
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragement_past, container, false);
@@ -66,6 +62,7 @@ public class FutureFragment extends Fragment {
                 .filter(event -> !(event.getEventType() == EventTypeEnum.ORDINARY.getType()) || event.getDate() >= calendar.getTimeInMillis())
                 .sorted(Comparator.comparingLong(Event::getDate).reversed())
                 .collect(Collectors.toList());
+        futureEvents.forEach(event -> event.setTitle(event.getTitle() + "    还有"));
         return futureEvents;
     }
 }
