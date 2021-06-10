@@ -63,7 +63,7 @@ public class FutureFragment extends Fragment {
 
     private List<Event> buildFutureEvents(List<Event> events) {
         List<Event> futureEvents = events.stream()
-                .filter(event -> !event.getEventType().equals(EventTypeEnum.ORDINARY.getType()) || event.getDate() >= calendar.getTimeInMillis())
+                .filter(event -> !(event.getEventType() == EventTypeEnum.ORDINARY.getType()) || event.getDate() >= calendar.getTimeInMillis())
                 .sorted(Comparator.comparingLong(Event::getDate).reversed())
                 .collect(Collectors.toList());
         return futureEvents;

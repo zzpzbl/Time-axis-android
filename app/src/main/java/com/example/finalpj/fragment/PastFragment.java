@@ -68,7 +68,7 @@ public class PastFragment extends Fragment {
 
     private List<Event> buildPastEvents(List<Event> events) {
         List<Event> pastEvents = events.stream()
-                .filter(event -> event.getEventType().equals(EventTypeEnum.ORDINARY.getType()) && event.getDate() < calendar.getTimeInMillis())
+                .filter(event -> event.getEventType() == EventTypeEnum.ORDINARY.getType() && event.getDate() < calendar.getTimeInMillis())
                 .sorted(Comparator.comparingLong(Event::getDate).reversed())
                 .collect(Collectors.toList());
         return pastEvents;
