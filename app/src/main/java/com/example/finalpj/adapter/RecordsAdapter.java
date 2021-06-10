@@ -15,11 +15,10 @@ import com.example.finalpj.DisplayActivity;
 import com.example.finalpj.R;
 import com.example.finalpj.entity.Event;
 import com.example.finalpj.enums.EventTypeEnum;
-import com.example.finalpj.utils.BitmapToStringUtil;
+import com.example.finalpj.utils.BitmapUtil;
 import com.example.finalpj.utils.DateUtil;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -96,7 +95,7 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.ViewHold
         holder.title.setText(event.getTitle());
         holder.intro.setText(event.getIntro());
         holder.countdown.setText(interval.toString());
-        holder.imageView.setImageBitmap(BitmapToStringUtil.convertStringToIcon(event.getImage()));
+        holder.imageView.setImageBitmap(BitmapUtil.convertStringToIcon(event.getImage()));
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, DisplayActivity.class);
             intent.putExtra("event", event);

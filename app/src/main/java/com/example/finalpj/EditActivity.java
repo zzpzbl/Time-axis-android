@@ -20,7 +20,6 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,7 +28,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.finalpj.entity.Event;
-import com.example.finalpj.utils.BitmapToStringUtil;
+import com.example.finalpj.utils.BitmapUtil;
 import com.example.finalpj.utils.DBUtil;
 import com.example.finalpj.utils.DateUtil;
 import com.example.finalpj.utils.FileUtil;
@@ -106,7 +105,7 @@ public class EditActivity extends AppCompatActivity {
             eventTitleEditText.setText(event.getTitle());
             eventIntroEditText.setText(event.getIntro());
             eventDetailsEditText.setText(event.getDetails());
-            eventImageView.setImageBitmap(BitmapToStringUtil.convertStringToIcon(event.getImage()));
+            eventImageView.setImageBitmap(BitmapUtil.convertStringToIcon(event.getImage()));
             eventTypeSpinner.setSelection(event.getEventType());
         }
     }

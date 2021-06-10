@@ -3,6 +3,7 @@ package com.example.finalpj;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -11,12 +12,12 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
+import com.example.finalpj.entity.Event;
+import com.example.finalpj.enums.EventTypeEnum;
+import com.example.finalpj.utils.BitmapUtil;
 import com.example.finalpj.utils.DBUtil;
 import com.example.finalpj.utils.DateUtil;
 import com.loper7.date_time_picker.*;
-import com.loper7.date_time_picker.number_picker.NumberPicker;
-
-import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -51,11 +52,21 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.finish) {
+            Long dateTime = DateUtil.getTimeStampFromDateTimePicker(dateTimePicker);
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.pic06);
             SharedPreferences.Editor editor = null;
             //获取haredPreferences.Editor对象，尝试写数据
             editor = preferences.edit();
-            editor.putString("BIRTHDAY", DateUtil.getTimeStampFromDateTimePicker(dateTimePicker).toString());
+            editor.putString("BIRTHDAY", dateTime.toString());
             editor.apply();
+            Event birthday = Event.builder().title("来到这个世界")
+                    .intro("感觉真不错呀")
+                    .details("祝你生日快乐~")
+                    .date(dateTime)
+                    .eventType(EventTypeEnum.ORDINARY.getType())
+                    .image(BitmapUtil.convertBitmapToBase64(bitmapDrawable.getBitmap()))
+                    .build();
+            DBUtil.insertEvent(birthday);
             Log.v("time", dateTimePicker.toString());
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);

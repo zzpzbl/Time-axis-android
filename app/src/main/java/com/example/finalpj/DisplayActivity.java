@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.finalpj.entity.Event;
-import com.example.finalpj.utils.BitmapToStringUtil;
+import com.example.finalpj.utils.BitmapUtil;
 import com.example.finalpj.utils.DBUtil;
 import com.example.finalpj.utils.DateUtil;
 
@@ -48,7 +48,7 @@ public class DisplayActivity extends AppCompatActivity {
             eventDate.setText(DateUtil.timestampToDateStr(event.getDate()));
             eventIntro.setText(event.getIntro());
             eventDetails.setText(event.getDetails());
-            eventImage.setImageBitmap(BitmapToStringUtil.convertStringToIcon(event.getImage()));
+            eventImage.setImageBitmap(BitmapUtil.convertStringToIcon(event.getImage()));
         }
     }
 
