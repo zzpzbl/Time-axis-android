@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="event_type_array">
+        <item>简单事件</item>
+        <item>年度事件</item>
+        <item>月度事件</item>
+    </string-array>
+</resources>

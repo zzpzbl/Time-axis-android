@@ -2,6 +2,8 @@ package com.example.finalpj.entity;
 
 import org.litepal.crud.LitePalSupport;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,14 +15,16 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper=false)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Event extends LitePalSupport {
+public class Event extends LitePalSupport implements Serializable {
 
     Integer id;
     Long date;
     String title;
     String intro;
     String details;
+    Integer eventType;
     String image;
+
 
     public Event(Integer id, Long date, String title, String details) {
         this.id = id;
@@ -28,5 +32,4 @@ public class Event extends LitePalSupport {
         this.title = title;
         this.details = details;
     }
-
 }

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.finalpj.R;
 import com.example.finalpj.adapter.RecordsAdapter;
 import com.example.finalpj.entity.Event;
+import com.example.finalpj.enums.EventTypeEnum;
 import com.example.finalpj.utils.DBUtil;
 
 import java.util.ArrayList;
@@ -30,6 +31,16 @@ public class FutureFragment extends Fragment {
     private Calendar calendar;
     private List<Event> eventList = new ArrayList<>();
 
+    public FutureFragment() {}
+
+    public FutureFragment(Context context) {
+        this.context = context;
+    }
+
+    public void setEventList(List<Event> eventList) {
+        this.eventList = eventList;
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragement_past, container, false);
@@ -40,18 +51,21 @@ public class FutureFragment extends Fragment {
     public void init(View view) {
         context = getContext();
         calendar = Calendar.getInstance();
-        initEvents();
         recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        recyclerView.setAdapter(new RecordsAdapter(eventList));
+        initEvents(DBUtil.selectAllEvents());
     }
 
-    private void initEvents() {
-        List<Event> events = DBUtil.selectAllEvents();
-        List<Event> pastEvents = events.stream()
-                .filter(event -> event.getDate() >= calendar.getTimeInMillis())
+    public void initEvents(List<Event> events) {
+        this.eventList = buildFutureEvents(events);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(new RecordsAdapter(context, eventList));
+    }
+
+    private List<Event> buildFutureEvents(List<Event> events) {
+        List<Event> futureEvents = events.stream()
+                .filter(event -> !event.getEventType().equals(EventTypeEnum.ORDINARY.getType()) || event.getDate() >= calendar.getTimeInMillis())
                 .sorted(Comparator.comparingLong(Event::getDate).reversed())
                 .collect(Collectors.toList());
-        this.eventList = pastEvents;
+        return futureEvents;
     }
 }

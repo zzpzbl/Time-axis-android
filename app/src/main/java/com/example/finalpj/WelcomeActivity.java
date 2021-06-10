@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
+import com.example.finalpj.utils.DBUtil;
+import com.example.finalpj.utils.DateUtil;
 import com.loper7.date_time_picker.*;
 import com.loper7.date_time_picker.number_picker.NumberPicker;
 
@@ -18,18 +20,11 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.logging.Logger;
+public class WelcomeActivity extends AppCompatActivity implements View.OnClickListener {
 
-public class FirstBloodActivity extends AppCompatActivity implements View.OnClickListener {
-
-    private EditText name;
     private DateTimePicker dateTimePicker;
     private SharedPreferences preferences;
     private Button finish;
-    private Button articleBtn;
-    private NumberPicker numberPickerOfYear;
-    private NumberPicker numberPickerOfMonth;
-    private NumberPicker numberPickerOfDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,26 +33,15 @@ public class FirstBloodActivity extends AppCompatActivity implements View.OnClic
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-        setContentView(R.layout.first_blood);
+        setContentView(R.layout.activity_welcome);
         initComponent();
         initSharedPreferences();
     }
 
     private void initComponent() {
-        name = findViewById(R.id.name);
         dateTimePicker = findViewById(R.id.dateTimePicker);
-        numberPickerOfYear = dateTimePicker.findViewById(R.id.np_datetime_year);
-        numberPickerOfMonth = dateTimePicker.findViewById(R.id.np_datetime_month);
-        numberPickerOfDay = dateTimePicker.findViewById(R.id.np_datetime_day);
         finish = findViewById(R.id.finish);
         finish.setOnClickListener(this);
-
-        articleBtn = findViewById(R.id.jmpArticle);
-        articleBtn.setOnClickListener(view -> {
-            Intent intent = new Intent(FirstBloodActivity.this, DisplayActivity.class);
-            startActivity(intent);
-        });
-
     }
 
     private void initSharedPreferences() {
@@ -70,10 +54,8 @@ public class FirstBloodActivity extends AppCompatActivity implements View.OnClic
             SharedPreferences.Editor editor = null;
             //获取haredPreferences.Editor对象，尝试写数据
             editor = preferences.edit();
-            editor.putString("USERNAME", name.toString());
-            editor.putString("BIRTHDAY", dateTimePicker.toString());
+            editor.putString("BIRTHDAY", DateUtil.getTimeStampFromDateTimePicker(dateTimePicker).toString());
             editor.apply();
-            Log.v("name ", name.toString());
             Log.v("time", dateTimePicker.toString());
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
@@ -87,7 +69,7 @@ public class FirstBloodActivity extends AppCompatActivity implements View.OnClic
             //隐藏键盘
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             if (imm.isActive()) {
-                imm.hideSoftInputFromWindow(FirstBloodActivity.this.getCurrentFocus().getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(WelcomeActivity.this.getCurrentFocus().getWindowToken(), 0);
             }
             return true;
         }

@@ -9,7 +9,7 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class EnablementActivity extends AppCompatActivity {
+public class LaunchActivity extends AppCompatActivity {
 
     private SharedPreferences preferences;
     private final int SPLASH_DISPLAY_LENGHT = 3000;  //延迟3秒
@@ -26,9 +26,9 @@ public class EnablementActivity extends AppCompatActivity {
                 String name = preferences.getString("USERNAME", "empty");
                 Intent intent = null;
                 if (name.equals("empty")) {
-                    intent = new Intent(EnablementActivity.this, FirstBloodActivity.class);
+                    intent = new Intent(LaunchActivity.this, WelcomeActivity.class);
                 } else {
-                    intent = new Intent(EnablementActivity.this, MainActivity.class);
+                    intent = new Intent(LaunchActivity.this, MainActivity.class);
                 }
                 startActivity(intent);
                 destroyActivity();
