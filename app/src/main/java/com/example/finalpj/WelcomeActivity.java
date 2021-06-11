@@ -70,6 +70,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
             Log.v("time", dateTimePicker.toString());
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+            finish();
         }
     }
 

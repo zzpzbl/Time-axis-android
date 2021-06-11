@@ -17,8 +17,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Event extends LitePalSupport implements Serializable {
 
-    Integer id;
-    Long date;
+    int id;
+    long date;
     String title;
     String intro;
     String details;
